@@ -11,7 +11,7 @@ import static java.lang.System.err;
 
 public class DBController {
     DbHandler db = DatabaseHandler.DbHandler.getInstance();
-
+    private String errors;
 
     @FXML protected TextField usernameField;
     @FXML protected TextField passwordField;
@@ -38,6 +38,9 @@ public class DBController {
     }
 
     private boolean validateTextfields(){
+        errors = "";
+
+
         String errors = "";
         if (usernameField.getText().isEmpty())
             errors += "Username is empty.\n";
@@ -46,16 +49,7 @@ public class DBController {
         if(passwordField.getText().isEmpty())
             errors += "Password is empty.\n";
 
-
-        if(ipField.getText().isEmpty())
-            errors += "IP is empty.\n";
-        else{
-            try {
-                Integer.parseInt(ipField.getText());
-            }catch (NumberFormatException nfe){
-                errors += "IP is not a number.\n";
-            }
-        }
+        validateIP(ipField.getText().trim());
 
         if(portField.getText().isEmpty())
             errors += "Port is empty.\n";
@@ -82,6 +76,20 @@ public class DBController {
         err.format("Validation: %s\n", errors.isEmpty());
         errorField.setText(errors);
         return errors.isEmpty();
+
+    }
+
+    private void validateIP(String ip){
+//        err.format("Regex test: %s\n",ipField.getText().matches("^(\\d{1,3}\\.){3}\\d{1,3}$"));
+        if(ip.isEmpty())
+            errors += "IP is empty.\n";
+        else if(!ip.matches("^(\\d{1,3}\\.){3}\\d{1,3}$")){
+            errors += "IP is invalid.\n";
+        }
+        else
+        {
+            db.setIp(ip);
+        }
 
     }
 
