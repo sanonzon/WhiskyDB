@@ -1,0 +1,73 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.control.TextArea?>
+<BorderPane fx:controller="Controllers.DBController"
+            xmlns:fx="http://javafx.com/fxml" >
+
+    <center>
+        <GridPane  hgap="10" vgap="10">
+
+            <Text text="Database Info"
+                  GridPane.columnIndex="0" GridPane.rowIndex="0"
+                  GridPane.columnSpan="2"/>
+
+            <Label text="Username:"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+            <TextField fx:id="usernameField"
+                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Password:"
+                   GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+            <PasswordField fx:id="passwordField"
+                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="IP:"
+                   GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+            <TextField fx:id="ipField"
+                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Port:"
+                   GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+            <TextField fx:id="portField"
+                       GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+
+            <Label text="Database:"
+                   GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+            <TextField fx:id="dbField"
+                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label text="Table:"
+                   GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+
+            <TextField fx:id="tableField"
+                       GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+
+
+            <Button GridPane.columnIndex="0" GridPane.rowIndex="6"
+                    onAction="#saveDBInfo">Save</Button>
+
+
+
+        </GridPane>
+    </center>
+
+    <bottom>
+
+        <TextArea BorderPane.alignment="BOTTOM_CENTER" fx:id="errorField" prefRowCount="7"/>
+
+    </bottom>
+</BorderPane>
