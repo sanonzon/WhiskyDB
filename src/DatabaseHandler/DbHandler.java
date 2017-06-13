@@ -1,5 +1,10 @@
 package DatabaseHandler;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.*;
+import Models.WhiskyModel;
+
 public class DbHandler {
     private static DbHandler ourInstance = new DbHandler();
 
@@ -41,4 +46,33 @@ public class DbHandler {
     public void setTable(String s) {
         table = s;
     }
+
+
+
+
+    public boolean insertIntoTable(WhiskyModel whisky){
+
+        try {
+            Connection connection = DriverManager.getConnection(ip,username,password);
+
+
+
+
+
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
+    }
+
+    public boolean selectFromTable(WhiskyModel whisky){
+        return false;
+    }
+
+
+
 }
