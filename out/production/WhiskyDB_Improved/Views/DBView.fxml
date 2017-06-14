@@ -22,36 +22,42 @@
                    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
             <TextField fx:id="usernameField"
+                       text="whiskyDB"
                        GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
             <Label text="Password:"
                    GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
             <PasswordField fx:id="passwordField"
+                           text="vy09ipHnSg6CZ4tt"
                            GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
             <Label text="IP:"
                    GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
             <TextField fx:id="ipField"
+                       text="192.168.0.103"
                        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
             <Text text=":"
                    GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
             <TextField fx:id="portField" promptText="Port"
+                       text="3306"
                        GridPane.columnIndex="3" GridPane.rowIndex="3"/>
 
             <Label text="Database:"
                    GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
             <TextField fx:id="dbField"
+                       text="whisky"
                        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
             <Label text="Table:"
                    GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
             <TextField fx:id="tableField"
+                       text="whisky"
                        GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
 

@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,11 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../Views/WhiskyView.fxml"));
-
-
-//        setupGui();
-
+        Parent root = FXMLLoader.load(Main.class.getResource("../Views/WhiskyView.fxml"));
 
         primaryStage.setTitle("Whisky Test");
         primaryStage.setScene(new Scene(root, 800, 600));
@@ -27,16 +22,4 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-/*    public void setupGui(){
-        Button dbInfoButton = new Button("Set DB info");
-        dbInfoButton.setOnAction(e->{
-            createDbStage();
-        });
-    }
-
-    public void createDbStage(){
-        Stage dbStage = new Stage();
-        dbStage.setTitle("DB info");
-    }*/
 }

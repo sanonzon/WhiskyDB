@@ -10,7 +10,7 @@ import static java.lang.System.err;
 
 
 public class DBController {
-    DbHandler db = DatabaseHandler.DbHandler.getInstance();
+    private DbHandler db = DatabaseHandler.DbHandler.getInstance();
     private String errors;
     private final String SUCCESS_STRING = "Database fields are now set.";
 
@@ -47,10 +47,6 @@ public class DBController {
         validatePort(portField.getText().trim());
         validateDB(dbField.getText().trim());
         validateTable(tableField.getText().trim());
-
-
-
-
 
         err.format("Validation: %s\n", errors.isEmpty());
         if (errors.isEmpty()){

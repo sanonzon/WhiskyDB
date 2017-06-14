@@ -9,6 +9,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.collections.FXCollections?>
+<?import Models.WhiskyModel?>
 <TabPane xmlns:fx="http://www.w3.org/2001/XMLSchema"
          fx:controller="Controllers.WhiskyController">
     <tabs>
@@ -20,29 +24,42 @@
                             <left>
                                 <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
                                     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-                                    <!-- <Text text=""
-                                           GridPane.columnIndex="0" GridPane.rowIndex="0"
-                                           GridPane.columnSpan="2"/>
-                                  -->
                                     <TextField fx:id="searchName" promptText="Search for a whisky by Name"
                                                GridPane.fillWidth="true"
                                                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-                                    <Button fx:id="whiskySearchButton" text="Search" textAlignment="CENTER"
+                                    <Button text="Search" textAlignment="CENTER"
                                             onAction="#searchWhisky"
                                             GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-
-
                                 </GridPane>
                             </left>
                             <right>
-                                <Text text="Toggle SQL window" />
-                                <Button text="Show" onAction="#toggleSQLwindow"/>
+                                <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+                                    <Text text="Toggle SQL window"
+                                          GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                                    <Button text="Show" onAction="#toggleSQLwindow"
+                                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                </GridPane>
                             </right>
                         </BorderPane>
                     </top>
                     <center>
-                       <Text text="resultatlistan kommer här sen"/>
+                        <TableView fx:id="tableView">
+                            <columns>
+                                <TableColumn text="Name"/>
+                                <TableColumn text="Age"/>
+                                <TableColumn text="Malt"/>
+                                <TableColumn text="Description"/>
+                            </columns>
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                <WhiskyModel name="Jacob"
+                                             age="33"
+                                             malt="jacob.smith@example.com"
+                                            description="jaskdjskdjkasdj"/>
+                                </FXCollections>
+                            </items>
+                        </TableView>
                     </center>
                     <bottom>
                         <TextArea editable="false" fx:id="searchWhiskyError">
@@ -78,9 +95,9 @@
                             <Label text="Description"
                                    GridPane.columnIndex="0" GridPane.rowIndex="3"/>
                             <TextArea fx:id="insertDescription" promptText="Enter description"
-                                       GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                      GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                            <Button fx:id="insertWhiskyButton" text="Submit" onAction="#insertWhisky"
+                            <Button text="Submit" onAction="#insertWhisky"
                                     textAlignment="CENTER"
                                     GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 

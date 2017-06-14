@@ -8,16 +8,10 @@ import java.util.List;
 
 import Models.WhiskyModel;
 
-import javax.swing.plaf.nimbus.State;
+// vy09ipHnSg6CZ4tt
+//jdbc:mysql://localhost:3306/dbname
 
 public class DbHandler {
-    private static DbHandler ourInstance = new DbHandler();
-
-    public static DbHandler getInstance() {
-        return ourInstance;
-    }
-    //jdbc:mysql://localhost:3306/dbname
-
     private String url;
     private String username;
     private String password;
@@ -25,6 +19,17 @@ public class DbHandler {
     private String port;
     private String db;
     private String table;
+    private static DbHandler ourInstance = null;
+
+    public static DbHandler getInstance()
+    {
+        if (ourInstance == null)
+            ourInstance = new DbHandler();
+        return ourInstance;
+    }
+
+
+
 
     private DbHandler() {
         username  = "";
@@ -34,6 +39,12 @@ public class DbHandler {
         db = "";
         table = "";
         url = "";
+
+       /* try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
     }
 
     public void setUsername(String s) {
@@ -61,11 +72,14 @@ public class DbHandler {
     public boolean insertIntoTable(WhiskyModel whisky) throws SQLException {
         url = String.format("jdbc:mysql://%s:%s/%s",ip,port,db);
 
-        String prepString = String.format("INSERT INTO %s (name, malt, age, description) VALUES (?,?,?,?)",table);
+        String prepString = String.format("INSERT INTO %s (NAME, MALT, AGE, DESCRIPTION) VALUES (?,?,?,?)",table);
         Connection connection = null;
         PreparedStatement stmt = null;
         try {
+
             connection = DriverManager.getConnection(url,username,password);
+
+            System.out.println("INSERT!!!!!!!!");
             connection.setAutoCommit(false);
             stmt = connection.prepareStatement(prepString);
 
@@ -78,8 +92,7 @@ public class DbHandler {
             connection.commit();
 
 
-        }
-        finally {
+        } finally {
             if(connection != null && !connection.isClosed())
                 connection.close();
             if(stmt != null && !stmt.isClosed())
@@ -88,41 +101,44 @@ public class DbHandler {
         return true;
     }
 
+
+    /**
+     * SQL query - TODO: background thread
+     * */
     public List<WhiskyModel> selectFromTable(WhiskyModel whisky) throws SQLException {
+//        System.out.println(whisky.getName());
         url = String.format("jdbc:mysql://%s:%s/%s", ip, port, db);
+//        System.err.print(url + "\n");
 
         List<WhiskyModel> resultList = new ArrayList<>();
-        String prepString = "SELECT name, malt, age, description FROM " + table + " WHERE name LIKE '%?%'";
+        String prepString = "SELECT NAME, MALT, AGE, DESCRIPTION FROM " + table + " WHERE NAME LIKE ?";
         Connection connection = null;
         PreparedStatement stmt = null;
         try {
-            connection = DriverManager.getConnection(url,username,password);
+            connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
             stmt = connection.prepareStatement(prepString);
 
             stmt.setString(1, whisky.getName());
 
             ResultSet result = stmt.executeQuery();
-            connection.commit();
+//            connection.commit();
 
-            while(result.next()){
+            while (result.next()) {
                 WhiskyModel wm = new WhiskyModel();
-                wm.setName(result.getString("name"));
-                wm.setMalt(result.getString("malt"));
-                wm.setAge(result.getInt("age"));
-                wm.setDescription(result.getString("description"));
+                wm.setName(result.getString("NAME"));
+                wm.setMalt(result.getString("MALT"));
+                wm.setAge(result.getInt("AGE"));
+                wm.setDescription(result.getString("DESCRIPTION"));
 
                 resultList.add(wm);
             }
-        }
-        finally {
-            if(connection != null && !connection.isClosed())
+        } finally {
+            if (connection != null && !connection.isClosed())
                 connection.close();
-            if(stmt != null && !stmt.isClosed())
+            if (stmt != null && !stmt.isClosed())
                 stmt.close();
         }
-
         return resultList;
     }
-
 }

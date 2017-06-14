@@ -32,4 +32,8 @@ public class WhiskyModel {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String toString(){
+        return String.format("%s, %s, %s, %s", this.name, this.age, this.malt, this.description);
+    }
 }
