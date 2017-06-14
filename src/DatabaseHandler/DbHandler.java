@@ -39,12 +39,6 @@ public class DbHandler {
         db = "";
         table = "";
         url = "";
-
-       /* try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void setUsername(String s) {

@@ -2,24 +2,33 @@ package Controllers;
 
 import DatabaseHandler.DbHandler;
 import Models.WhiskyModel;
+import Models.WhiskyTableModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class WhiskyController {
+    @FXML protected ObservableList<WhiskyTableModel> whiskyTable
+            = FXCollections.observableArrayList();
+    @FXML protected TableColumn<WhiskyTableModel, String> nameColumn;
+    @FXML protected TableColumn<WhiskyTableModel, String> maltColumn;
+    @FXML protected TableColumn<WhiskyTableModel, Integer> ageColumn;
+    @FXML protected TableColumn<WhiskyTableModel, String> descriptionColumn;
+
+
     @FXML protected TextField searchName;
     @FXML protected TextField insertName;
     @FXML protected TextField insertAge;
@@ -27,8 +36,14 @@ public class WhiskyController {
     @FXML protected TextArea insertDescription;
     @FXML private TextArea searchWhiskyError;
     @FXML protected TextArea insertWhiskyError;
-    @FXML protected TextArea resultQueryTable;
-    @FXML private TableView<WhiskyModel> tableView;
+    @FXML private TableView<WhiskyTableModel> tableView;
+
+//    @FXML private void initialize(){
+//        nameColumn.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+//        ageColumn.setCellValueFactory(celldata -> celldata.getValue().ageProperty());
+//        maltColumn.setCellValueFactory(celldata -> celldata.getValue().maltProperty());
+//        descriptionColumn.setCellValueFactory(celldata -> celldata.getValue().descriptionProperty());
+//    }
 
     @FXML
     protected void insertWhisky(ActionEvent event) {
@@ -42,7 +57,9 @@ public class WhiskyController {
         WhiskyModel wm = createWhiskyModel(name, age, malt, description);
         if (wm != null){
             try {
-                DbHandler.getInstance().insertIntoTable(wm);
+                if (DbHandler.getInstance().insertIntoTable(wm)){
+                    insertWhiskyError.setText("Successfully added.");
+                }
             } catch (SQLException e) {
                 insertWhiskyError.setText(e.getMessage());
                 e.printStackTrace();
@@ -54,6 +71,7 @@ public class WhiskyController {
 
     @FXML
     protected void searchWhisky(ActionEvent event) {
+        whiskyTable.clear();
         String name = searchName.getText().trim();
         if(validateSearchName(name)){
             WhiskyModel wm = new WhiskyModel();
@@ -68,17 +86,22 @@ public class WhiskyController {
 
             // Add each whisky to tableview
             if (resultList != null && resultList.size() > 0){
-                ObservableList<WhiskyModel> data = tableView.getItems();
+               /* ObservableList<WhiskyModel> data = tableView.getItems();
                 for (WhiskyModel w: data) {
                     System.out.println(w.toString());
-                    }
+                }*/
 
 //                data.addAll(resultList);
 
                 for (WhiskyModel w : resultList ) {
-                    tableView.getItems().add(w);
+//                    WhiskyTableModel wtm = new WhiskyTableModel();
+                    System.out.println(w.toString());
+                    whiskyTable.add(new WhiskyTableModel(w.getName(),w.getMalt(),w.getAge(),w.getDescription()));
+//                    tableView.setItems(whiskyTable);
+//                    tableView.getItems().add(w);
 //                    System.out.println(String.format("Name: %s", w.getName()));
                 }
+                tableView.setItems(whiskyTable);
             }
         }
     }

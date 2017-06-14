@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.collections.FXCollections?>
 <?import Models.WhiskyModel?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <TabPane xmlns:fx="http://www.w3.org/2001/XMLSchema"
          fx:controller="Controllers.WhiskyController">
     <tabs>
@@ -44,21 +45,30 @@
                         </BorderPane>
                     </top>
                     <center>
-                        <TableView fx:id="tableView">
+                        <TableView fx:id="tableView" >
+                            <!--items="${resultDataObservableList}">-->
                             <columns>
-                                <TableColumn text="Name"/>
-                                <TableColumn text="Age"/>
-                                <TableColumn text="Malt"/>
-                                <TableColumn text="Description"/>
+                                <TableColumn text="Name">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="name" />
+                                </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn text="Age">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="age" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn text="Malt">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="malt" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn text="Description">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="description" />
+                                    </cellValueFactory>
+                                </TableColumn>
                             </columns>
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                <WhiskyModel name="Jacob"
-                                             age="33"
-                                             malt="jacob.smith@example.com"
-                                            description="jaskdjskdjkasdj"/>
-                                </FXCollections>
-                            </items>
                         </TableView>
                     </center>
                     <bottom>
