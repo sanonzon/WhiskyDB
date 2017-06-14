@@ -8,13 +8,11 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private Stage primaryStage;
 
 
     @Override
-    public void start(Stage dummyStage) throws Exception{
-        primaryStage = dummyStage;
-        Parent root = FXMLLoader.load(getClass().getResource("../Views/DBView.fxml"));
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("../Views/WhiskyView.fxml"));
 
 
 //        setupGui();
@@ -30,17 +28,15 @@ public class Main extends Application {
         launch(args);
     }
 
-    public void setupGui(){
+/*    public void setupGui(){
         Button dbInfoButton = new Button("Set DB info");
         dbInfoButton.setOnAction(e->{
             createDbStage();
         });
-
-
     }
 
     public void createDbStage(){
         Stage dbStage = new Stage();
         dbStage.setTitle("DB info");
-    }
+    }*/
 }

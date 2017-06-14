@@ -12,6 +12,7 @@ import static java.lang.System.err;
 public class DBController {
     DbHandler db = DatabaseHandler.DbHandler.getInstance();
     private String errors;
+    private final String SUCCESS_STRING = "Database fields are now set.";
 
     @FXML protected TextField usernameField;
     @FXML protected TextField passwordField;
@@ -40,43 +41,25 @@ public class DBController {
     private boolean validateTextfields(){
         errors = "";
 
-
-        String errors = "";
-        if (usernameField.getText().isEmpty())
-            errors += "Username is empty.\n";
-
-
-        if(passwordField.getText().isEmpty())
-            errors += "Password is empty.\n";
-
+        validateUsername(usernameField.getText().trim());
+        validatePassword(passwordField.getText().trim());
         validateIP(ipField.getText().trim());
-
-        if(portField.getText().isEmpty())
-            errors += "Port is empty.\n";
-        else{
-            try {
-                Integer.parseInt(portField.getText());
-            }catch (NumberFormatException nfe){
-                errors += "Port is not a number.\n";
-            }
-        }
-
-
-        if(dbField.getText().isEmpty())
-            errors += "DB is empty.\n";
-
-
-        if(tableField.getText().isEmpty())
-            errors += "Table is empty.\n";
+        validatePort(portField.getText().trim());
+        validateDB(dbField.getText().trim());
+        validateTable(tableField.getText().trim());
 
 
 
 
 
         err.format("Validation: %s\n", errors.isEmpty());
-        errorField.setText(errors);
-        return errors.isEmpty();
-
+        if (errors.isEmpty()){
+            errorField.setText(SUCCESS_STRING);
+            return true;
+        }else{
+            errorField.setText(errors);
+            return false;
+        }
     }
 
     private void validateIP(String ip){
@@ -90,7 +73,35 @@ public class DBController {
         {
             db.setIp(ip);
         }
-
     }
 
+    private void validatePort(String port){
+        if(port.isEmpty())
+            errors += "Port is empty.\n";
+        else{
+            try {
+                Integer.parseInt(port);
+            }catch (NumberFormatException nfe){
+                errors += "Port is not a number.\n";
+            }
+        }
+    }
+    private void validateUsername(String username){
+        if (username.isEmpty())
+            errors += "Username is empty.\n";
+    }
+
+    private void validatePassword(String password){
+        if(password.isEmpty())
+            errors += "Password is empty.\n";
+    }
+
+    private void validateDB(String db){
+        if(db.isEmpty())
+            errors += "DB is empty.\n";
+    }
+    private void validateTable(String table){
+        if(table.isEmpty())
+            errors += "Table is empty.\n";
+    }
 }
